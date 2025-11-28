@@ -3,17 +3,30 @@ import './App.css';
 
 /**
  * Resolve the API base URL.
- * - Uses relative path when CRA proxy is configured (optional).
- * - Falls back to absolute http://localhost:3001 for local dev when no proxy.
+ * Priority:
+ * 1) If REACT_APP_API_BASE is defined, use it.
+ * 2) If running on CRA dev server (port 3000), use relative path to leverage proxy.
+ * 3) Otherwise, fallback to http://localhost:3001.
  */
 const getApiBase = () => {
-  // If running on same origin with a CRA proxy set, relative works.
-  const useRelative =
+  // 1) Explicit override via env
+  const envBase = process.env.REACT_APP_API_BASE;
+  if (envBase && typeof envBase === 'string' && envBase.trim() !== '') {
+    return envBase.trim().replace(/\/+$/, ''); // sanitize trailing slashes
+  }
+
+  // 2) CRA dev server proxy use-case
+  const isCRADev =
     typeof window !== 'undefined' &&
     window.location &&
-    window.location.port === '3000'; // typical CRA dev
+    window.location.port === '3000';
 
-  return useRelative ? '' : 'http://localhost:3001';
+  if (isCRADev) {
+    return ''; // relative path - proxy will forward to backend
+  }
+
+  // 3) Fallback for non-proxy contexts
+  return 'http://localhost:3001';
 };
 
 // PUBLIC_INTERFACE
