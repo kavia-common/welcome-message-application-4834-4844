@@ -1,63 +1,135 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
+  /* Ocean Professional light theme */
+  --primary: #2563EB;      /* Blue */
+  --secondary: #F59E0B;    /* Amber */
+  --error: #EF4444;
+
+  --bg-primary: #f9fafb;
+  --bg-secondary: #ffffff;
+
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+
+  --border-color: #e5e7eb;
+  --button-bg: var(--primary);
   --button-text: #ffffff;
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  /* Ocean Professional dark theme */
+  --primary: #60a5fa;
+  --secondary: #fbbf24;
+  --error: #f87171;
+
+  --bg-primary: #0b1220;
+  --bg-secondary: #111827;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #cbd5e1;
+
+  --border-color: #1f2937;
+  --button-bg: var(--primary);
+  --button-text: #0b1220;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
 .App {
   text-align: center;
-  background-color: var(--bg-primary);
+  background: radial-gradient(1200px 800px at 50% -10%, rgba(37,99,235,0.08), transparent),
+              var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  transition: background-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .App-header {
-  background-color: var(--bg-secondary);
+  background-color: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: 24px;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 16px;
   color: var(--text-primary);
-  transition: background-color 0.3s ease;
   position: relative;
+  padding: 24px;
 }
 
-.App-link {
+/* Card */
+.card {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 28px 28px;
+  width: min(560px, 92vw);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.12);
+  border-color: rgba(37,99,235,0.25);
+}
+
+/* Subtle accent gradient bar */
+.card-accent {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  opacity: 0.9;
+}
+
+/* Typography */
+.title {
+  margin: 10px 0 4px 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0 0 12px 0;
   color: var(--text-secondary);
-  transition: color 0.3s ease;
+  font-size: 14px;
 }
 
+.content {
+  margin-top: 8px;
+}
+
+.message {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(37,99,235,0.08), rgba(37,99,235,0.04));
+  border: 1px solid rgba(37,99,235,0.2);
+  color: var(--text-primary);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.error {
+  color: #fff;
+  background: var(--error);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Theme toggle button */
 .theme-toggle {
   position: absolute;
   top: 20px;
@@ -65,40 +137,44 @@
   background-color: var(--button-bg);
   color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  border-radius: 10px;
+  padding: 10px 16px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
 }
 
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.35);
+  opacity: 0.98;
 }
 
 .theme-toggle:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+/* Reduced motion & responsiveness */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .card {
+    transition: none;
   }
 }
 
-/* Responsive design for mobile */
 @media (max-width: 768px) {
   .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
+    top: 12px;
+    right: 12px;
+    padding: 8px 14px;
     font-size: 12px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .message {
+    font-size: 18px;
   }
 }
